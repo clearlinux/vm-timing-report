@@ -19,7 +19,18 @@ for i in $(cat /proc/cmdline) ; do
         esac
 done
 
-echo "$OURID|||`systemd-analyze`" > /dev/virtio-ports/serial0
+while :
+do
+        ANALYZE="`systemd-analyze`"
+        if [[ $? -ne 0 ]]; then
+                # Must wait for systemd-analyze to report a boot time,
+                # otherwise this is not considered "booted"
+                sleep 0.2
+                continue
+        fi
+        echo "$OURID|||$ANALYZE" > /dev/virtio-ports/serial0
+        break
+done
 sync
 
 sleep 3
