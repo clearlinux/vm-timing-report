@@ -27,7 +27,7 @@ vm_timing_report_LDADD = \
 	-lpthread
 
 EXTRA_DIST = \
-	README \
+	README.md \
 	LICENSE \
 	scripts/vm-report.sh \
 	scripts/spin-from-raw.sh \
