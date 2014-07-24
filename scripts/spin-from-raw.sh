@@ -60,7 +60,7 @@ for device in $DEVS ; do
                 if [[ ! -d $BFILES ]]; then
                         mkdir $BFILES
                 fi
-                cp -v `ls $TMPMOUNT/boot/initr* | grep -v rescue | grep -v plymouth` $BFILES/initrd
+                cp -v `ls $TMPMOUNT/boot/initr* | grep -v rescue | grep -v plymouth | grep -v dump` $BFILES/initrd
                 cp -v `ls $TMPMOUNT/boot/vmlinu* | grep -v rescue` $BFILES/vmlinuz
         elif [[ -n "$(shopt -s nullglob; echo $TMPMOUNT/vmlinuz*)" ]]; then
                 # Same thing as above, but this is a boot partition
@@ -69,7 +69,7 @@ for device in $DEVS ; do
                 if [[ ! -d $BFILES ]]; then
                         mkdir $BFILES
                 fi
-                cp -v `ls $TMPMOUNT/initr* | grep -v rescue | grep -v plymouth` $BFILES/initrd
+                cp -v `ls $TMPMOUNT/initr* | grep -v rescue | grep -v plymouth | grep -v dump` $BFILES/initrd
                 cp -v `ls $TMPMOUNT/vmlinu* | grep -v rescue` $BFILES/vmlinuz
         fi
 
