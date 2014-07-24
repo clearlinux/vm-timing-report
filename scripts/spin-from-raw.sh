@@ -44,7 +44,6 @@ if [[ ! -d $TMPMOUNT  ]]; then
         mkdir $TMPMOUNT
 fi
 
-set +x
 # find partitions
 for device in $DEVS ; do
         echo "$device"
