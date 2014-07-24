@@ -1,0 +1,18 @@
+[Unit]
+Description=VM Report
+DefaultDependencies=yes
+Before=shutdown.target
+Wants=dev-vport0p1.device
+After=dev-vport0p1.device
+
+[Service]
+Environment=HOME=/home/root
+WorkingDirectory=/home/root
+ExecStart=-/usr/bin/vm-report
+
+[Install]
+WantedBy=multi-user.target
+
+# Bash ignores SIGTERM, so we send SIGHUP instead, to ensure that bash
+# terminates cleanly.
+KillSignal=SIGHUP
