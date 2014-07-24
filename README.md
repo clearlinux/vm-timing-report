@@ -2,6 +2,7 @@ vm-timing-report
 ======
 
 Copyright (C) 2014 Intel Corporation
+
 Author: Ikey Doherty <michael.i.doherty@intel.com>
 
 
@@ -22,7 +23,7 @@ for your operating system images. Now you should create some test images:
 And now, cd back to the directory that the rootfs.img lives in, and
 execute according to the parameters required by your operating system:
 
-    # Booting 8 vms (-n), 340M of memory each (-m), prefix of "your-os" (-p"
+    # Booting 8 vms (-n), 340M of memory each (-m), prefix of "your-os" (-p)
     # and suffix of ".img" (-s), using -k(ernel) and -i(nitrd) from the
     # BFILES directory (auto-saved) and using vms as the vmdir (-v)
     sudo vm-timing-report -n 8 -m 340 -p your-os -s .img -k BFILES/vmlinuz -i BFILES/initrd -v vms/
