@@ -28,6 +28,7 @@ vm_timing_report_LDADD = \
 
 EXTRA_DIST = \
 	README.md \
+	README.CentOS.md \
 	LICENSE \
 	scripts/vm-report.sh \
 	scripts/spin-from-raw.sh \
