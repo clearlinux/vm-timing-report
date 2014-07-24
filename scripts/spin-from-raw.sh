@@ -61,8 +61,8 @@ for device in $DEVS ; do
                 if [[ ! -d $BFILES ]]; then
                         mkdir $BFILES
                 fi
-                cp -v $TMPMOUNT/boot/initrd* $BFILES/initrd
-                cp -v $TMPMOUNT/boot/vmlinu* $BFILES/vmlinuz
+                cp -v `ls $TMPMOUNT/boot/initr* | grep -v rescue | grep -v plymouth` $BFILES/initrd
+                cp -v `ls $TMPMOUNT/boot/vmlinu* | grep -v rescue` $BFILES/vmlinuz
         elif [[ -n "$(shopt -s nullglob; echo $TMPMOUNT/vmlinuz*)" ]]; then
                 # Same thing as above, but this is a boot partition
                 echo "Backing up boot files from boot partition"
@@ -70,8 +70,8 @@ for device in $DEVS ; do
                 if [[ ! -d $BFILES ]]; then
                         mkdir $BFILES
                 fi
-                cp -v $TMPMOUNT/initrd* $BFILES/initrd
-                cp -v $TMPMOUNT/vmlinu* $BFILES/vmlinuz
+                cp -v `ls $TMPMOUNT/initr* | grep -v rescue | grep -v plymouth` $BFILES/initrd
+                cp -v `ls $TMPMOUNT/vmlinu* | grep -v rescue` $BFILES/vmlinuz
         fi
 
         if [[ ! -e $TMPMOUNT/usr/lib/systemd/systemd ]]; then
