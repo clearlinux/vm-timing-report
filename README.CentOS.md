@@ -10,7 +10,7 @@ Initial VM template:
 Firstly we'll create a direct VM image as a raw filesystem suitable for
 conversion:
 
-    virt-install --name "centos7x-vm-gpt" --ram 2048 --nographics --os-type=linux \
+    virt-install --name "centos7" --ram 2048 --nographics --os-type=linux \
     --os-variant=rhel7 --location=http://mirrors.clouvider.net/CentOS/7/os/x86_64 \
     --extra-args="ks=https://raw.githubusercontent.com/ikeydoherty/vm-timing-report/master/data/centos7.ks text console=tty0\ utf8 console=ttyS0,115200" \
     --disk /var/lib/libvirt/images/centos7.img,device=disk,sparse=true,size=10,bus=virtio,format=raw
