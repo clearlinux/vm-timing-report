@@ -273,6 +273,7 @@ void handle_requests(struct Config *config)
                 for (int j = 0; j < connection_count; j++) {
                         if (sockets[j] != -1 && FD_ISSET(sockets[j], &fds)) {
                                 len = read(sockets[j], &buffer, 500);
+                                char *copy = NULL;
                                 if (len < 0) {
                                         fprintf(stderr, "No data on socket %d\n", sockets[j]);
                                         goto close;
@@ -281,10 +282,11 @@ void handle_requests(struct Config *config)
                                 if (buffer[len-1] != '\0') {
                                         buffer[len-1] = '\0';
                                 }
+                                copy = strdup(buffer);
                                 char *left = strtok(buffer, "|||");
                                 char *right = strtok(NULL, "|||");
                                 if (right == NULL) {
-                                        fprintf(stderr, "UNKNOWN REQUEST: %s\n", buffer);
+                                        fprintf(stderr, "UNKNOWN REQUEST: %s\n", copy);
                                         goto close;
                                 }
                                 /* Obtain the ID */
@@ -299,6 +301,9 @@ void handle_requests(struct Config *config)
                                 }
                                 clock_gettime(CLOCK_MONOTONIC, &entry->time_end);
 close:
+                                if (copy) {
+                                        free(copy);
+                                }
                                 close(sockets[j]);
                                 FD_CLR(sockets[j], &fds);
                                 sockets[j] = -1;
