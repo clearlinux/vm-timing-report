@@ -285,7 +285,7 @@ void handle_requests(struct Config *config)
                                 copy = strdup(buffer);
                                 char *left = strtok(buffer, "|||");
                                 char *right = strtok(NULL, "|||");
-                                if (right == NULL) {
+                                if (!right) {
                                         fprintf(stderr, "UNKNOWN REQUEST: %s\n", copy);
                                         goto close;
                                 }
@@ -429,23 +429,23 @@ int main(int argc, char **argv)
                 }
         }
         /* Sanity */
-        if (config.prefix == NULL) {
+        if (!config.prefix) {
                 fprintf(stderr, "No prefix set\n");
                 goto end;
         }
         /* Non fatal */
-        if (config.suffix == NULL) {
+        if (!config.suffix) {
                 config.suffix = "";
         }
-        if (config.path == NULL) {
+        if (!config.path) {
                 fprintf(stderr, "No vmdir set\n");
                 goto end;
         }
-        if (config.kernel== NULL) {
+        if (!config.kernel) {
                 fprintf(stderr, "No kernel set\n");
                 goto end;
         }
-        if (config.initrd == NULL) {
+        if (!config.initrd) {
                 fprintf(stderr, "No initrd set\n");
                 goto end;
         }
