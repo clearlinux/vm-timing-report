@@ -6,8 +6,8 @@ Wants=dev-vport0p1.device
 After=dev-vport0p1.device
 
 [Service]
-Environment=HOME=/home/root
-WorkingDirectory=/home/root
+Environment=HOME=/
+WorkingDirectory=/
 ExecStart=-/usr/bin/vm-report
 
 [Install]
