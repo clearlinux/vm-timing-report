@@ -49,6 +49,7 @@ struct Config {
         uint32_t memory;
         const char *kernel;
         const char *initrd;
+        const char *qemu;
         uint32_t top;
         struct timespec time_start;
         struct timespec time_end;
@@ -70,8 +71,7 @@ bool init_vms(struct Config *config)
         struct BootEntry *entry = NULL;
         char *img_file = NULL;
 
-        /* For systems with qemu-system-x86_64 */
-        const char *command = "qemu-system-x86_64 -device virtio-serial-pci -chardev socket,id=ch0,path=%s "
+        const char *command = "%s -device virtio-serial-pci -chardev socket,id=ch0,path=%s "
 "-device virtserialport,chardev=ch0,name=serial0 -enable-kvm -m %dm -drive file=%s,if=virtio -usb -device usb-kbd "
 " -append \"root=/dev/vda quiet "VMPREFIX":%u\" -kernel %s -initrd %s -vnc :%u &";
 
@@ -96,7 +96,7 @@ bool init_vms(struct Config *config)
                         return false;
                 }
                 /* Full command */
-                if (!asprintf(&entry->cmd_buffer, command, config->sock_path, config->memory, img_file, i, config->kernel, config->initrd, i)) {
+                if (!asprintf(&entry->cmd_buffer, command, config->qemu, config->sock_path, config->memory, img_file, i, config->kernel, config->initrd, i)) {
                         fprintf(stderr, "Unable to allocate memory\n");
                         abort();
                 }
@@ -371,6 +371,7 @@ void print_help(const char *progname)
 "       -k      kernel  Path to the kernel\n"
 "       -i      initrd  Path to the initrd\n"
 "       -n      number  Number of VMS to boot\n"
+"       -q      qemu    Path to qemu binary (default: qemu-system-x86_64\n"
 "       -h      help    Print this help message\n";
 
         printf(help_msg, progname);
@@ -394,11 +395,12 @@ int main(int argc, char **argv)
                 { "kernel", required_argument, 0, 'k' },
                 { "initrd", required_argument, 0, 'i' },
                 { "number", required_argument, 0, 'n' },
+                { "qemu",   required_argument, 0, 'q'},
                 { "help", no_argument, 0, 'h' },
                 { 0, 0, 0, 0 }
         };
 
-        while ((c = getopt_long(argc, argv, "m:p:v:s:k:i:n:h", options, &optindex)) != -1) {
+        while ((c = getopt_long(argc, argv, "m:p:v:s:k:i:n:q:h", options, &optindex)) != -1) {
                 switch (c) {
                         case 'm':
                                 config.memory = (uint32_t)atoi(optarg);
@@ -420,6 +422,9 @@ int main(int argc, char **argv)
                                 break;
                         case 'n':
                                 config.top = (uint32_t)atoi(optarg);
+                                break;
+                        case 'q':
+                                config.qemu = optarg;
                                 break;
                         case 'h':
                                 print_help(argv[0]);
@@ -448,6 +453,10 @@ int main(int argc, char **argv)
         if (!config.initrd) {
                 fprintf(stderr, "No initrd set\n");
                 goto end;
+        }
+        /* Fallback to qemu-system-x86_64 */
+        if (!config.qemu) {
+                config.qemu = "qemu-system-x86_64";
         }
 
         /* Initialise directories and socket */
