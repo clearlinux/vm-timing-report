@@ -51,6 +51,7 @@ install -m 0700 /usr/share/vm-timing-report/vm-report.init $MOUNTPOINT/etc/init.
 install -m 0755 /usr/share/vm-timing-report/vm-report.sh $MOUNTPOINT/usr/bin/vm-report
 
 chroot $MOUNTPOINT update-rc.d vm-report defaults
+chroot $MOUNTPOINT update-rc.d vm-report enable
 
 sleep 1
 sync

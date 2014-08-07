@@ -21,7 +21,11 @@ done
 
 while :
 do
-        ANALYZE="`systemd-analyze`"
+        if [[ -e /usr/lib/upstart || ! -e /dev/virtio-ports/serial0 ]]; then
+            ANALYZE="`uptime`"
+        else
+            ANALYZE="`systemd-analyze`"
+        fi
         if [[ $? -ne 0 ]]; then
                 # Must wait for systemd-analyze to report a boot time,
                 # otherwise this is not considered "booted"

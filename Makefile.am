@@ -9,12 +9,14 @@ bin_PROGRAMS = \
 	vm-timing-report
 
 bin_SCRIPTS = \
-	scripts/spin-from-raw.sh
+	scripts/spin-from-raw.sh \
+	scripts/gen-ubuntu-rawfs.sh
 
 supportdir = $(datadir)/vm-timing-report
 support_DATA = \
 	scripts/vm-report.sh \
-	data/vm-report.service
+	data/vm-report.service \
+	data/vm-report.init
 
 vm_timing_report_SOURCES = \
 	src/vm-timing-report.c
@@ -32,5 +34,7 @@ EXTRA_DIST = \
 	LICENSE \
 	scripts/vm-report.sh \
 	scripts/spin-from-raw.sh \
+	scripts/gen-ubuntu-rawfs.sh
+	data/vm-report.init
 	data/vm-report.service
 
