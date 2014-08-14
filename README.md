@@ -13,6 +13,12 @@ Firstly, issue the following command:
 
     sudo spin-from-raw.sh $PATHTORAWFILESYSTEM
 
+If you are testing CentOS, please see README.CentOS.md
+If you are testing Ubuntu, you can generate a compatible raw filesystem
+using the following command: (This will create a 14.04 system)
+
+    sudo gen-ubuntu-rawfs.sh
+
 Once this is complete, you should have a new "rootfs.img" as a backing file
 for your operating system images. Now you should create some test images:
 
