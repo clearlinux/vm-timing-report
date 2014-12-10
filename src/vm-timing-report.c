@@ -77,11 +77,19 @@ bool init_vms(struct Config *config)
 
         if (!entries) {
                 entries = calloc(sizeof(struct BootEntry), config->top);
+                if (!entries) {
+                        fprintf(stderr, "Unable to allocate memory\n");
+                        abort();
+                }
         }
 
         /* First iteration, organise the boot entries - in case of memory issues */
         for (uint32_t i = 0; i < config->top; i++) {
                 entries[i] = calloc(sizeof(struct BootEntry), 1);
+                if (!entries[i]) {
+                        fprintf(stderr, "Unable to allocate memory\n");
+                        abort();
+                }
                 entry = entries[i];
 
                 /* Image location */
@@ -241,6 +249,10 @@ void handle_requests(struct Config *config)
         }
 
         sockets = calloc(config->top, sizeof(int));
+        if (!sockets) {
+                fprintf(stderr, "Unable to allocate memory\n");
+                abort();
+        }
 
         while (true) {
                 FD_ZERO(&fds);
